@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jude — Portfolio UGC</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Plus+Jakarta+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet">
+  
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #faf9f6;
+      color: #121212;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* --- HERO CONTAINER --- */
+    .landing-hero-bg {
+      width: 100vw;
+      min-height: 100vh;
+      margin-left: calc(-50vw + 50%);
+      background-color: #faf9f6;
+      padding: 50px 60px 0px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+    
+    /* --- MENU DE NAVIGATION --- */
+    .lp-header {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto 10px auto;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      position: relative;
+      z-index: 999;
+    }
+    .lp-nav {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+      align-items: center;
+      width: 100%;
+    }
+    .lp-nav > li {
+      position: relative;
+    }
+    .lp-nav a,
+    .lp-nav a:visited,
+    .lp-nav a:active,
+    .lp-nav a:focus {
+      text-decoration: none;
+      color: #121212;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      display: inline-block;
+      transition: opacity 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
+      padding: 5px 0;
+      line-height: 1.2;
+    }
+    .lp-nav a:hover {
+      opacity: 0.5;
+    }
+    
+    /* --- BOUTON INSTAGRAM --- */
+    .lp-nav > li.nav-instagram {
+      margin-left: auto;
+    }
+    .lp-nav a.btn-instagram,
+    .lp-nav a.btn-instagram:visited {
+      border: 1px solid #121212;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      font-weight: 500;
+      background-color: transparent;
+      opacity: 1;
+    }
+    .lp-nav a.btn-instagram:hover {
+      background-color: #121212;
+      color: #ffffff !important;
+      opacity: 1;
+    }
+
+    /* --- DROPDOWN --- */
+    .dropdown-parent {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-parent::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      height: 14px;
+    }
+    .dropdown-parent:hover .dropdown-menu {
+      display: block;
+      opacity: 1;
+      visibility: visible;
+    }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      z-index: 1000;
+      list-style: none;
+      background: transparent;
+      width: 160px;
+    }
+    .dropdown-content {
+      background: #ffffff;
+      border: 1px solid rgba(18, 18, 18, 0.08);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      border-radius: 8px;
+      padding: 6px 0;
+      list-style: none;
+      width: 100%;
+    }
+    .dropdown-content li {
+      display: block;
+    }
+    .dropdown-content a,
+    .dropdown-content a:visited,
+    .dropdown-content a:active,
+    .dropdown-content a:focus {
+      display: block;
+      width: 100%;
+      padding: 10px 18px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #121212;
+      white-space: nowrap;
+      text-align: left;
+      transition: background 0.2s ease;
+    }
+    .dropdown-content a:hover {
+      background: #f4f3ef;
+      opacity: 1;
+    }
+    
+    /* --- GRID HERO --- */
+    .lp-hero-grid {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr 0.5fr;
+      gap: 20px;
+      align-items: flex-end;
+      flex-grow: 1;
+    }
+    .lp-hero-img-box {
+      width: 100%;
+      height: 100vh;
+      margin-top: -120px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: lpEditorialReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s;
+    }
+    .lp-hero-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: bottom left;
+      display: block;
+      mix-blend-mode: multiply;
+    }
+    .lp-hero-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      height: 100%;
+      padding-bottom: 80px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: lpEditorialReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.4s;
+    }
+    .lp-hero-subtitle {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4em;
+      color: #8a8580;
+      margin-bottom: 16px;
+    }
+    .lp-hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5.2rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      line-height: 0.95;
+      margin: 0 0 40px 0;
+      color: #121212;
+      text-transform: uppercase;
+    }
+    .lp-hero-btn,
+    .lp-hero-btn:visited {
+      display: inline-block;
+      border-bottom: 1px solid #121212;
+      color: #121212;
+      text-decoration: none;
+      padding-bottom: 6px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      transition: all 0.3s ease;
+    }
+    .lp-hero-btn:hover {
+      opacity: 0.5;
+      letter-spacing: 0.38em;
+    }
+
+    /* --- SECTION VIDÉO --- */
+    .lp-section-video {
+      max-width: 1200px;
+      margin: 100px auto;
+      padding: 0 60px;
+    }
+    .lp-section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+    .lp-video-container {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+    }
+    .lp-video-container video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    @keyframes lpEditorialReveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Responsive Mobile */
+    @media (max-width: 850px) {
+      .landing-hero-bg {
+        padding: 30px 24px 0px 24px;
+        min-height: auto;
+      }
+      .lp-header {
+        margin-bottom: 35px;
+      }
+      .lp-nav {
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .lp-nav > li.nav-instagram {
+        margin-left: 0;
+      }
+      .lp-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+      }
+      .lp-hero-text {
+        order: 2;
+        padding-bottom: 60px;
+        justify-content: flex-start;
+      }
+      .lp-hero-img-box {
+        order: 1;
+        height: 480px;
+        margin-top: 0;
+      }
+      .lp-hero-title {
+        font-size: 3.6rem;
+        margin-bottom: 25px;
+      }
+      .lp-section-video {
+        padding: 0 24px;
+        margin: 60px auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="landing-hero-bg">
+    
+    <!-- MENU D'EN-TÊTE -->
+    <header class="lp-header" role="banner">
+      <ul class="lp-nav">
+        
+        <li class="dropdown-parent">
+          <a href="#videoSection">Mes réalisations ▾</a>
+          <div class="dropdown-menu">
+            <ul class="dropdown-content">
+              <li><a href="#photoSection">Photos</a></li>
+              <li><a href="#videoSection">Vidéos</a></li>
+            </ul>
+          </div>
+        </li>
+        
+        <li><a href="#aboutSection">À propos</a></li>
+        <li><a href="#contactSection">Contact</a></li>
+        
+        <li class="nav-instagram">
+          <a href="https://www.instagram.com/_juudeeee?utm_source=ig_web_button_share_sheet&amp;igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" class="btn-instagram">INSTAGRAM</a>
+        </li>
+      </ul>
+    </header>
+
+    <!-- BANNIÈRE HERO -->
+    <section class="lp-hero-grid">
+      
+      <div class="lp-hero-img-box">
+        <img src="images/v1.jpg" data-name="v1" alt="Jude Creator">
+      </div>
+
+      <div class="lp-hero-text">
+        <span class="lp-hero-subtitle">CRÉATEUR DE CONTENU UGC</span>
+        <h1 class="lp-hero-title">JUDE</h1>
+        <a href="#videoSection" class="lp-hero-btn">Voir mes réalisations</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- SECTION VIDÉO RÉALISATIONS -->
+  <section id="videoSection" class="lp-section-video">
+    <h2 class="lp-section-title">Vidéos</h2>
+    <div class="lp-video-container">
+      <video autoplay loop muted playsinline src="images/video-tel.mp4"></video>
+    </div>
+  </section>
+
+  <script>
+    // Automation d'extensions pour l'image v1
+    document.querySelectorAll('img[data-name="v1"]').forEach(function(img) {
+      var name = img.getAttribute('data-name');
+      var paths = [
+        'images/' + name + '.jpg',
+        'images/' + name + '.jpeg',
+        'images/' + name + '.JPG',
+        name + '.jpg',
+        name + '.jpeg'
+      ];
+      var currentTry = 0;
+      img.onerror = function() {
+        currentTry++;
+        if (currentTry < paths.length) {
+          img.src = paths[currentTry];
+        }
+      };
+    });
+  </script>
+</body>
+</html>
